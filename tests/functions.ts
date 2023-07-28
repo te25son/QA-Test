@@ -1,4 +1,4 @@
-import { WebElement, Key } from "selenium-webdriver";
+import { WebElement, Key, Condition } from "selenium-webdriver";
 
 export async function enterValue(element: WebElement, value: string) {
     await element.sendKeys(value);
@@ -13,3 +13,10 @@ export async function toggleElementsInList(elements: WebElement[]) {
         await element.click();
     }
 }
+
+export async function assertElementContainsText(element: WebElement, expected: string) {
+    const actual = await element.getText();
+    if (actual !== expected) {
+        throw new Error(`Test failed: Expected element to contain ${expected}, but got ${actual}.`);
+    }
+}   

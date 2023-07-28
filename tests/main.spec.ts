@@ -1,15 +1,14 @@
 import { describe, before, after, it } from 'mocha';
-import { Builder, By } from 'selenium-webdriver';
-import { assert } from 'chai';
+import { Builder, By, WebDriver } from 'selenium-webdriver';
+import { expect } from 'chai';
 
 import config from '../config';
-import { enterValue, pressEnterInInput, toggleElementsInList } from './functions';
+import { enterValue, pressEnterInInput, toggleElementsInList, assertElementContainsText } from './functions';
 
 describe("Todo List Tests", async function () {
     this.timeout(config.timeout);
 
     let driver;
-    const find_todo_elements = async () => await driver.findElements(By.css('.todo-list .toggle'));
 
     before(async function () {
         driver = await new Builder()
@@ -37,23 +36,23 @@ describe("Todo List Tests", async function () {
         await pressEnterInInput(newTodoInputField);
 
         // Assert
-        const todoListItems = await find_todo_elements();
+        const todoListItems = await driver.findElements(By.css('.todo-list label'));
         const itemOne = await todoListItems[0].getText();
         const itemTwo = await todoListItems[1].getText();
-        assert(() => itemOne.contains(TODO_ITEM_ONE));
-        assert(() => itemTwo.contains(TODO_ITEM_TWO));
-        assert(() => todoListItems.length === 2);
+        expect(itemOne).to.contain(TODO_ITEM_ONE);
+        expect(itemTwo).to.contain(TODO_ITEM_TWO);
+        expect(todoListItems.length).to.eq(2);
     });
 
     it("Can Toggle Items In Todo List", async function () {
         // Arrange
-        const todoListItems = await find_todo_elements();
+        const todoListItems = await driver.findElements(By.css('.todo-list .toggle'));
 
         // Act
         await toggleElementsInList(todoListItems);
 
         // Assert
         const toggledElements = await driver.findElements(By.css(".todo-list .completed"));
-        assert(() => toggledElements.length === 2);
+        expect(toggledElements.length).to.eq(2);
     });
 })

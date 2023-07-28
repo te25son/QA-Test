@@ -1,7 +1,7 @@
 import { Options } from 'selenium-webdriver/firefox';
 
 const config = {
-    baseUrl: process.env.BASE_URL,
+    baseUrl: process.env.BASE_URL || "",
     timeout: process.env.TIMEOUT || 10000,
     options: new Options({
         resolutionX: 1920,
