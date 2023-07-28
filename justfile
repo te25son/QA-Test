@@ -12,3 +12,6 @@ test:
 
 check:
     npx eslint .
+
+report:
+    open ./mochawesome-report/mochawesome.html
