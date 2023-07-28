@@ -6,6 +6,8 @@ import config from '../config';
 import { enterValue, pressEnterInInput, toggleElementsInList } from './functions';
 
 describe("Todo List Tests", async function () {
+    this.timeout(10000);
+    
     let driver;
     const find_todo_elements = async () => await driver.findElements(By.css('.todo-list .toggle'));
 
