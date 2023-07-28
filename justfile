@@ -8,7 +8,7 @@ alias t := test
 alias c := check
 
 test:
-    npx ts-mocha tests/** --timeout 10000
+    npx ts-mocha tests/** --timeout 10000 --reporter mochawesome
 
 check:
     npx eslint .
